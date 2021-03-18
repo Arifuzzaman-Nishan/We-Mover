@@ -1,10 +1,12 @@
 import React from 'react';
+import Home from './Component/Home/Home';
 import Login from './Component/Login/Login';
 
 const App = () => {
   return (
     <div>
-      <Login></Login>
+      <Home></Home>
+      {/* <Login></Login> */}
     </div>
   );
 };

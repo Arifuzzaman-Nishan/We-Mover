@@ -1,8 +1,10 @@
 import React from 'react';
+import backgroundImage from '../../images/homeBackground.jpg';
+import './Home.css';
 
 const Home = () => {
     return (
-        <div>
+        <div className='bg-pic'>
             
         </div>
     );
