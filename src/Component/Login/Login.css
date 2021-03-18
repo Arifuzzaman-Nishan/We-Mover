@@ -1,0 +1,35 @@
+.google{
+    background-color: #ea4335;
+}
+.twitter{
+    background-color: #1DA1F2;
+}
+.facebook{
+    background-color: #3b5998;
+  }
+.icon{
+      font-size: 25px;
+      color: #fff;
+      height: 50px;
+      width: 50px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+  }
+
+.google:hover{
+    background-color: rgb(51, 50, 50);
+}
+.twitter:hover{
+    background-color: rgb(51, 50, 50);
+}
+.facebook:hover{
+    background-color: rgb(51, 50, 50);
+  }
+.logged-in{
+    font-size: 16px;
+    line-height: 1.2;
+    color: #1DA1F2;
+}
