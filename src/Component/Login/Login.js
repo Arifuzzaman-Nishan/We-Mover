@@ -18,12 +18,76 @@ if (!firebase.apps.length) {
 }
 
 const Login = () => {
-    const { register, handleSubmit, watch, errors,reset } = useForm();
+    const { register, handleSubmit, watch, errors, reset } = useForm();
     const password = useRef({});
     password.current = watch("password", "");
 
     const [newUserInfo, setNewUserInfo] = useState({});
-    const onSubmit = data => console.log(data);
+
+    // sign UP and sing In
+    const onSubmit = (data) => {
+        if (newUser && data.email && data.password) {
+            firebase.auth().createUserWithEmailAndPassword(data.email, data.password)
+                .then((userCredential) => {
+                    // Signed in 
+                    var user = userCredential.user;
+                    console.log('successfully created account');
+                    
+                })
+                .catch((error) => {
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    // console.log(errorCode, errorMessage);
+                    // ..
+                });
+
+        }
+        else {
+            firebase.auth().signInWithEmailAndPassword(data.email, data.password)
+                .then((userCredential) => {
+                    // Signed in
+                    var user = userCredential.user;
+                    // console.log(user);
+                    setNewUserInfo(data);
+                    // ...
+                })
+                .catch((error) => {
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    console.log(errorCode, errorMessage);
+                });
+        }
+    }
+
+    console.log(newUserInfo);
+
+    // google sign In
+    const handleGoogleSignIn = () => {
+        const googleProvider = new firebase.auth.GoogleAuthProvider();
+        firebase.auth()
+            .signInWithPopup(googleProvider)
+            .then((result) => {
+                var credential = result.credential;
+
+                // This gives you a Google Access Token. You can use it to access the Google API.
+                var token = credential.accessToken;
+                // The signed-in user info.
+                var user = result.user;
+                console.log(user);
+                // ...
+            }).catch((error) => {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                // The email of the user's account used.
+                var email = error.email;
+                // The firebase.auth.AuthCredential type that was used.
+                var credential = error.credential;
+                console.log(errorCode,errorMessage);
+                // ...
+            });
+    }
+
 
 
     const { name } = useParams();
@@ -82,7 +146,7 @@ const Login = () => {
 
                             {/* for name */}
                             {newUser && <input className='form-control' type="name" name='name' placeholder='Your name' ref={register({ required: true })} />}
-                            {newUser && errors.name && <span className='text-danger'>name field is required</span>}
+                            {errors.name && <span className='text-danger'>name field is required</span>}
 
                             {/* for email */}
                             <input className='mt-4 form-control' type="email" name='email' placeholder='Your email' ref={register({ required: true })} />
@@ -105,7 +169,7 @@ const Login = () => {
                                     value === password.current || "The passwords do not match"
                             })} />}
                             {
-                                newUser && errors.confirmPassword && <span className='text-danger'>{errors.confirmPassword.message}</span>
+                                errors.confirmPassword && <span className='text-danger'>{errors.confirmPassword.message}</span>
                             }
 
                             {/* for submit button */}
@@ -123,7 +187,7 @@ const Login = () => {
                                 <div className='icon facebook'>
                                     <FontAwesomeIcon icon={faFacebookF} />
                                 </div>
-                                <div className='icon google'>
+                                <div onClick={handleGoogleSignIn} className='icon google'>
                                     <FontAwesomeIcon icon={faGoogle} />
                                 </div>
 
