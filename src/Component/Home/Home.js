@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import backgroundImage from '../../images/homeBackground.jpg';
 import Navbar from '../Navbar/Navbar';
 import './Home.css';
 import data from '../../fakeData/data.json';
@@ -11,7 +10,6 @@ const Home = () => {
     useEffect(()=>{
         setVehicleInfos(data);
     },[])
-    console.log(vehicleInfos);
 
     return (
         <div className='bg-pic'>

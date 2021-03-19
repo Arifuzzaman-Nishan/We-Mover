@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext, useState } from 'react';
 import Home from './Component/Home/Home';
 import Login from './Component/Login/Login';
 import Navbar from './Component/Navbar/Navbar';
@@ -10,6 +10,7 @@ import {
 } from "react-router-dom";
 import NoMatch from './Component/NoMatch/NoMatch';
 
+
 const App = () => {
   return (
     <div>
@@ -18,13 +19,13 @@ const App = () => {
           <Route path='/home'>
             <Home></Home>
           </Route>
-          <Route path='/login'>
+          {/* <Route path='/login'>
             <Login></Login>
-          </Route>
-          {/* this is the dynamic path  */}
-          {/* <Route path='/team-details/:idTeam'>
-          
           </Route> */}
+          {/* this is the dynamic path  */}
+          <Route path='/login/:name'>
+              <Login></Login>
+          </Route>
           <Route exact path='/'>
             <Home></Home>
           </Route>

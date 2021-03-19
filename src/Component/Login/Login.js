@@ -1,6 +1,5 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 import { faFacebookF } from '@fortawesome/free-brands-svg-icons'
 import { faTwitter } from '@fortawesome/free-brands-svg-icons'
@@ -9,12 +8,20 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import firebaseConfig from './firebase.confiq';
 import './Login.css';
+import { useParams } from 'react-router';
+import fakeData from '../../fakeData/data.json';
 
 if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
 }
 
 const Login = () => {
+    const {name} = useParams();
+    console.log('login ',name);
+
+    const vehicleInfo = fakeData.find(vehicleName => vehicleName.name === name);
+    console.log(vehicleInfo);
+
     // const handleFb = () => {
     //     const fbProvider = new firebase.auth.FacebookAuthProvider();
 
@@ -51,7 +58,7 @@ const Login = () => {
                         <h2 className='text-center'>Login</h2>
                     </div>
                     <div className="card-body">
-                        <form onClick=''>
+                        <form>
                             <input className='form-control mb-4' required type="email" name='email' placeholder='Your email' />
                             <input className='form-control mb-4' type="password" name='password' placeholder='Your password' />
                             <input className='form-control bg-danger logged-in' type="submit" value='LogIn' />
