@@ -10,9 +10,9 @@ const Navbar = () => {
     const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed);
 
     return (
-        <nav className="bg-color navbar navbar-expand-lg navbar-light rounded">
+        <nav className="container bg-color navbar navbar-expand-lg navbar-light rounded">
             <a className="navbar-brand text-info font-weight-bolder" href="/">
-                <img src={logo} alt="" height="36" classNameName="vertical-align-middle" />
+                <img src={logo} alt="" height="36" className="vertical-align-middle" />
                 {/* <span classNameName="mx-5">We Mover</span> */}
             </a>
             <button className="custom-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded={!isNavCollapsed ? true : false} aria-label="Toggle navigation" onClick={handleNavCollapse}>

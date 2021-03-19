@@ -8,12 +8,30 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import NoMatch from './Component/NoMatch/NoMatch';
 
 const App = () => {
   return (
     <div>
       <Router>
-        <Home></Home>
+        <Switch>
+          <Route path='/home'>
+            <Home></Home>
+          </Route>
+          <Route path='/login'>
+            <Login></Login>
+          </Route>
+          {/* this is the dynamic path  */}
+          {/* <Route path='/team-details/:idTeam'>
+          
+          </Route> */}
+          <Route exact path='/'>
+            <Home></Home>
+          </Route>
+          <Route path='*'>
+            <NoMatch></NoMatch>
+          </Route>
+        </Switch>
       </Router>
     </div>
   );
