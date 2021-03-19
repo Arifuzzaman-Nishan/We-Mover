@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 import { faFacebookF } from '@fortawesome/free-brands-svg-icons'
@@ -18,10 +18,13 @@ if (!firebase.apps.length) {
 }
 
 const Login = () => {
-    const { register, handleSubmit, watch, errors } = useForm();
+    const { register, handleSubmit, watch, errors,reset } = useForm();
     const password = useRef({});
     password.current = watch("password", "");
+
+    const [newUserInfo, setNewUserInfo] = useState({});
     const onSubmit = data => console.log(data);
+
 
     const { name } = useParams();
     const vehicleInfo = fakeData.find(vehicleName => vehicleName.name === name);
@@ -31,18 +34,13 @@ const Login = () => {
         name: '',
         password: '',
     })
-    
+
     const [newUser, setNewUser] = useState(false);
     const handleNewUser = () => {
         setNewUser(!newUser);
-        errors.password = false;
-        errors.email = false;
+        reset();
     }
-    let color;
-    // const [error,setError] = useState(false);
 
-    const handleSignUp = () => {
-    }
 
     // const handleFb = () => {
     //     const fbProvider = new firebase.auth.FacebookAuthProvider();
@@ -102,12 +100,12 @@ const Login = () => {
                             {errors.password && <span className='text-danger'>{errors.password.message || 'password should contain at least 1 letter and 1 number'}</span>}
 
                             {/* for confirm password */}
-                            {newUser && <input className='mt-4 form-control' type="password" name='confirmPassword' placeholder='Confirm password' ref={register({ 
+                            {newUser && <input className='mt-4 form-control' type="password" name='confirmPassword' placeholder='Confirm password' ref={register({
                                 validate: value =>
-                                value === password.current? "password match":"The passwords do not match"
-                                })} />}
+                                    value === password.current || "The passwords do not match"
+                            })} />}
                             {
-                            newUser && errors.confirmPassword && <span className={errors.confirmPassword.message === 'password match'? 'text-success':'text-danger'}>{errors.confirmPassword.message}</span>
+                                newUser && errors.confirmPassword && <span className='text-danger'>{errors.confirmPassword.message}</span>
                             }
 
                             {/* for submit button */}
@@ -148,7 +146,7 @@ const Login = () => {
                                         <small>
                                             <p className='mt-5 text-center'>Don't have an account</p>
                                         </small>
-                                        <Link onClick={ handleNewUser}><p className='text-center'>Sign Up</p></Link>
+                                        <Link onClick={handleNewUser}><p className='text-center'>Sign Up</p></Link>
                                     </div>
                             }
                         </div>
