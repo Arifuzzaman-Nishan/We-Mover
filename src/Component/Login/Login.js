@@ -30,6 +30,13 @@ const Login = () => {
         password: '',
     })
     const [newUser, setNewUser] = useState(false);
+    const handleNewUser = () => {
+        setNewUser(!newUser);
+        errors.password = false;
+        errors.email = false;
+    }
+    // const [error,setError] = useState(false);
+
     const handleSignUp = () => {
     }
 
@@ -70,24 +77,41 @@ const Login = () => {
                     </div>
                     <div className="card-body">
                         <form onSubmit={handleSubmit(onSubmit)}>
-                            {newUser && <input className='form-control' type="name" name='name' placeholder='Your name' ref={register({ required: true })} />}
-                            {errors.name && <span className='text-danger'>name field is required</span>}
 
+                            {/* for name */}
+                            {newUser && <input className='form-control' type="name" name='name' placeholder='Your name' ref={register({ required: true })} />}
+                            {newUser && errors.name && <span className='text-danger'>name field is required</span>}
+
+                            {/* for email */}
                             <input className='mt-4 form-control' type="email" name='email' placeholder='Your email' ref={register({ required: true })} />
                             {errors.email && <span className='text-danger'>Email field is required</span>}
 
-                            <input className='mt-4 form-control' type="password" name='password' placeholder='Your password' ref={register({ required: true })} />
-                            {errors.password && <span className='text-danger'>Password field is required</span>}
+                            {/* for password */}
+                            <input className='mt-4 form-control' type="password" name='password' placeholder='Your password' ref={register({
+                                required: "You must specify a password",
+                                pattern: /[a-zA-Z][0-9]/,
+                                minLength: {
+                                    value: 8,
+                                    message: "Password must have at least 8 characters"
+                                }
+                            })} />
+                            {errors.password && <span className='text-danger'>{errors.password.message || 'password should contain at least 1 letter and 1 number'}</span>}
 
+                            {/* for confirm password */}
                             {newUser && <input className='mt-4 form-control' type="password" name='confirmPassword' placeholder='Confirm password' ref={register({ required: true })} />}
-                            {errors.confirmPassword && <span className='text-danger'>Confirm password field is required</span>}
+                            {newUser && errors.confirmPassword && <span className='text-danger'>Confirm password field is required</span>}
 
-                            <input className='mt-4 form-control bg-danger logged-in text-white' type="submit" value='LogIn' />
+                            {/* for submit button */}
+                            {
+                                newUser ? <input className='mt-4 form-control bg-danger logged-in text-white' type="submit" value='Create an account' /> : <input className='mt-4 form-control bg-danger logged-in text-white' type="submit" value='LogIn' />
+                            }
                         </form>
                         <div>
                             <small>
                                 <p className='mt-5 text-center'>Or Sign Up Using</p>
                             </small>
+
+                            {/* for icons */}
                             <div className='d-flex justify-content-around mt-4'>
                                 <div className='icon facebook'>
                                     <FontAwesomeIcon icon={faFacebookF} />
@@ -100,10 +124,24 @@ const Login = () => {
                                     <FontAwesomeIcon icon={faTwitter} />
                                 </div>
                             </div>
-                            <small>
-                                <p className='mt-5 text-center'>Don't have an account</p>
-                            </small>
-                            <Link onClick={() => setNewUser(!newUser)}><p className='text-center'>Sign Up</p></Link>
+
+                            {/* for last text */}
+                            {
+                                newUser ?
+                                    <div>
+                                        <small>
+                                            <p className='mt-5 text-center'>Already have an account</p>
+                                        </small>
+                                        <Link onClick={handleNewUser}><p className='text-center'>Log In</p></Link>
+                                    </div>
+                                    :
+                                    <div>
+                                        <small>
+                                            <p className='mt-5 text-center'>Don't have an account</p>
+                                        </small>
+                                        <Link onClick={ handleNewUser}><p className='text-center'>Sign Up</p></Link>
+                                    </div>
+                            }
                         </div>
                     </div>
                 </div>
