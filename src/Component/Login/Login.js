@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 import { faFacebookF } from '@fortawesome/free-brands-svg-icons'
@@ -19,6 +19,8 @@ if (!firebase.apps.length) {
 
 const Login = () => {
     const { register, handleSubmit, watch, errors } = useForm();
+    const password = useRef({});
+    password.current = watch("password", "");
     const onSubmit = data => console.log(data);
 
     const { name } = useParams();
@@ -29,12 +31,14 @@ const Login = () => {
         name: '',
         password: '',
     })
+    
     const [newUser, setNewUser] = useState(false);
     const handleNewUser = () => {
         setNewUser(!newUser);
         errors.password = false;
         errors.email = false;
     }
+    let color;
     // const [error,setError] = useState(false);
 
     const handleSignUp = () => {
@@ -98,8 +102,13 @@ const Login = () => {
                             {errors.password && <span className='text-danger'>{errors.password.message || 'password should contain at least 1 letter and 1 number'}</span>}
 
                             {/* for confirm password */}
-                            {newUser && <input className='mt-4 form-control' type="password" name='confirmPassword' placeholder='Confirm password' ref={register({ required: true })} />}
-                            {newUser && errors.confirmPassword && <span className='text-danger'>Confirm password field is required</span>}
+                            {newUser && <input className='mt-4 form-control' type="password" name='confirmPassword' placeholder='Confirm password' ref={register({ 
+                                validate: value =>
+                                value === password.current? "password match":"The passwords do not match"
+                                })} />}
+                            {
+                            newUser && errors.confirmPassword && <span className={errors.confirmPassword.message === 'password match'? 'text-success':'text-danger'}>{errors.confirmPassword.message}</span>
+                            }
 
                             {/* for submit button */}
                             {
