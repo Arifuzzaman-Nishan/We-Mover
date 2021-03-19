@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 import { faFacebookF } from '@fortawesome/free-brands-svg-icons'
@@ -10,17 +10,28 @@ import firebaseConfig from './firebase.confiq';
 import './Login.css';
 import { useParams } from 'react-router';
 import fakeData from '../../fakeData/data.json';
+import { useForm } from "react-hook-form";
+import { Link } from 'react-router-dom';
 
 if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
 }
 
 const Login = () => {
-    const {name} = useParams();
-    console.log('login ',name);
+    const { register, handleSubmit, watch, errors } = useForm();
+    const onSubmit = data => console.log(data);
 
+    const { name } = useParams();
     const vehicleInfo = fakeData.find(vehicleName => vehicleName.name === name);
-    console.log(vehicleInfo);
+
+    const [user, setUser] = useState({
+        email: '',
+        name: '',
+        password: '',
+    })
+    const [newUser, setNewUser] = useState(false);
+    const handleSignUp = () => {
+    }
 
     // const handleFb = () => {
     //     const fbProvider = new firebase.auth.FacebookAuthProvider();
@@ -58,10 +69,20 @@ const Login = () => {
                         <h2 className='text-center'>Login</h2>
                     </div>
                     <div className="card-body">
-                        <form>
-                            <input className='form-control mb-4' required type="email" name='email' placeholder='Your email' />
-                            <input className='form-control mb-4' type="password" name='password' placeholder='Your password' />
-                            <input className='form-control bg-danger logged-in' type="submit" value='LogIn' />
+                        <form onSubmit={handleSubmit(onSubmit)}>
+                            {newUser && <input className='form-control' type="name" name='name' placeholder='Your name' ref={register({ required: true })} />}
+                            {errors.name && <span className='text-danger'>name field is required</span>}
+
+                            <input className='mt-4 form-control' type="email" name='email' placeholder='Your email' ref={register({ required: true })} />
+                            {errors.email && <span className='text-danger'>Email field is required</span>}
+
+                            <input className='mt-4 form-control' type="password" name='password' placeholder='Your password' ref={register({ required: true })} />
+                            {errors.password && <span className='text-danger'>Password field is required</span>}
+
+                            {newUser && <input className='mt-4 form-control' type="password" name='confirmPassword' placeholder='Confirm password' ref={register({ required: true })} />}
+                            {errors.confirmPassword && <span className='text-danger'>Confirm password field is required</span>}
+
+                            <input className='mt-4 form-control bg-danger logged-in text-white' type="submit" value='LogIn' />
                         </form>
                         <div>
                             <small>
@@ -79,6 +100,10 @@ const Login = () => {
                                     <FontAwesomeIcon icon={faTwitter} />
                                 </div>
                             </div>
+                            <small>
+                                <p className='mt-5 text-center'>Don't have an account</p>
+                            </small>
+                            <Link onClick={() => setNewUser(!newUser)}><p className='text-center'>Sign Up</p></Link>
                         </div>
                     </div>
                 </div>
