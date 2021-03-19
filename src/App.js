@@ -13,8 +13,7 @@ const App = () => {
   return (
     <div>
       <Router>
-        <Home>
-        </Home>
+        <Home></Home>
       </Router>
     </div>
   );
