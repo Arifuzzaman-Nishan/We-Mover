@@ -9,23 +9,30 @@ import {
   Link
 } from "react-router-dom";
 import NoMatch from './Component/NoMatch/NoMatch';
+import Map from './Component/Map/Map';
+import PrivateRoute from './Component/PrivateRoute/PrivateRoute';
 
+export const userContext = createContext();
 
 const App = () => {
+  const [loggedInUser, setLoggedInUser] = useState({});
   return (
-    <div>
+    <userContext.Provider value={[loggedInUser, setLoggedInUser]}>
       <Router>
         <Switch>
           <Route path='/home'>
             <Home></Home>
           </Route>
-          {/* <Route path='/login'>
+          <Route path='/login'>
             <Login></Login>
-          </Route> */}
-          {/* this is the dynamic path  */}
-          <Route path='/login/:name'>
-              <Login></Login>
           </Route>
+          {/* this is the dynamic path  */}
+          <PrivateRoute path='/map/:name'>
+              <Map></Map>
+          </PrivateRoute>
+          <PrivateRoute path='/map'>
+              <Map></Map>
+          </PrivateRoute>
           <Route exact path='/'>
             <Home></Home>
           </Route>
@@ -34,7 +41,7 @@ const App = () => {
           </Route>
         </Switch>
       </Router>
-    </div>
+      </userContext.Provider>
   );
 };
 

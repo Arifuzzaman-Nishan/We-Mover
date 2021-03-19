@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 import { faFacebookF } from '@fortawesome/free-brands-svg-icons'
@@ -8,10 +8,11 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import firebaseConfig from './firebase.confiq';
 import './Login.css';
-import { useParams } from 'react-router';
+import { useHistory, useLocation, useParams } from 'react-router';
 import fakeData from '../../fakeData/data.json';
 import { useForm } from "react-hook-form";
 import { Link } from 'react-router-dom';
+import { userContext } from '../../App';
 
 if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
@@ -24,15 +25,30 @@ const Login = () => {
 
     const [newUserInfo, setNewUserInfo] = useState({});
 
+    const [loggedInUser, setLoggedInUser] = useContext(userContext);
+    let history = useHistory();
+    let location = useLocation();
+    let { from } = location.state || { from: { pathname: "/" } };
+
     // sign UP and sing In
     const onSubmit = (data) => {
         if (newUser && data.email && data.password) {
             firebase.auth().createUserWithEmailAndPassword(data.email, data.password)
                 .then((userCredential) => {
                     // Signed in 
-                    var user = userCredential.user;
+                    // var user = userCredential.user;
                     console.log('successfully created account');
-                    
+                   
+                    var user = firebase.auth().currentUser;
+
+                    user.updateProfile({
+                        displayName: data.name
+                    }).then(function () {
+                        setLoggedInUser(user);
+                        history.replace(from);
+                    }).catch(function (error) {
+                        // An error happened.
+                    });
                 })
                 .catch((error) => {
                     var errorCode = error.code;
@@ -48,7 +64,10 @@ const Login = () => {
                     // Signed in
                     var user = userCredential.user;
                     // console.log(user);
-                    setNewUserInfo(data);
+                    // setNewUserInfo(data);
+                    setLoggedInUser(user);
+                    console.log('successfully log in');
+                    history.replace(from);
                     // ...
                 })
                 .catch((error) => {
@@ -73,7 +92,9 @@ const Login = () => {
                 var token = credential.accessToken;
                 // The signed-in user info.
                 var user = result.user;
-                console.log(user);
+                setLoggedInUser(user);
+                history.replace(from);
+                // console.log(user);
                 // ...
             }).catch((error) => {
                 // Handle Errors here.
@@ -83,7 +104,7 @@ const Login = () => {
                 var email = error.email;
                 // The firebase.auth.AuthCredential type that was used.
                 var credential = error.credential;
-                console.log(errorCode,errorMessage);
+                console.log(errorCode, errorMessage);
                 // ...
             });
     }
@@ -93,11 +114,6 @@ const Login = () => {
     const { name } = useParams();
     const vehicleInfo = fakeData.find(vehicleName => vehicleName.name === name);
 
-    const [user, setUser] = useState({
-        email: '',
-        name: '',
-        password: '',
-    })
 
     const [newUser, setNewUser] = useState(false);
     const handleNewUser = () => {
@@ -174,7 +190,7 @@ const Login = () => {
 
                             {/* for submit button */}
                             {
-                                newUser ? <input className='mt-4 form-control bg-danger logged-in text-white' type="submit" value='Create an account' /> : <input className='mt-4 form-control bg-danger logged-in text-white' type="submit" value='LogIn' />
+                                newUser ? <input className='mt-4 form-control bg-danger logged-in text-white' type="submit" value='Create an account' /> : <input className='mt-4 form-control bg-danger logged-in text-white' type="submit" value='Log In' />
                             }
                         </form>
                         <div>
@@ -203,14 +219,14 @@ const Login = () => {
                                         <small>
                                             <p className='mt-5 text-center'>Already have an account</p>
                                         </small>
-                                        <Link onClick={handleNewUser}><p className='text-center'>Log In</p></Link>
+                                        <p onClick={handleNewUser} className='text-center'>Log In</p>
                                     </div>
                                     :
                                     <div>
                                         <small>
                                             <p className='mt-5 text-center'>Don't have an account</p>
                                         </small>
-                                        <Link onClick={handleNewUser}><p className='text-center'>Sign Up</p></Link>
+                                        <p onClick={handleNewUser} className='text-center'>Sign Up</p>
                                     </div>
                             }
                         </div>

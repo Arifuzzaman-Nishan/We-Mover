@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 
 import logo from '../../images/logo.png';
+import { userContext } from '../../App';
 
 const Navbar = () => {
     const [isNavCollapsed, setIsNavCollapsed] = useState(true);
+    const [loggedInUser, setLoggedInUser] = useContext(userContext);
 
     const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed);
+
+    // console.log(loggedInUser);
 
     return (
         <nav className="container bg-color navbar navbar-expand-lg navbar-light rounded">
@@ -21,12 +25,14 @@ const Navbar = () => {
 
             <div className={`${isNavCollapsed ? 'collapse' : ''} navbar-collapse`} id="navbarsExample09">
                     <Link to="/home" className="nav-link text-info ml-auto" >Home</Link>
-                    <Link className="nav-link text-info" to="/login">Destination</Link>
+                    <Link className="nav-link text-info" to="/map">Destination</Link>
                     <Link className="nav-link text-info" to = "/blog">Blog</Link>
                     <Link className="nav-link text-info" to ="/contact">Contact</Link>
-                    <Link to="/login" className="nav-link text-white">
+                    {
+                        loggedInUser.displayName? <p className='mt-3 ml-3 font-weight-bold text-success'>{loggedInUser.displayName}</p> : <Link to="/map" className="nav-link text-white">
                         <button className='btn btn-danger'>Log in</button>
                     </Link>
+                    }
             </div>
         </nav>
     );

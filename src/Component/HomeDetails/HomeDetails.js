@@ -7,7 +7,7 @@ const HomeDetails = (props) => {
 
     return (
         <div className='col-lg-3 col-md-6 col-12'>
-            <div className="card p-4 border border-danger" style={{ width: '18rem', height: '350px',cursor:"pointer" }} onClick={() => history.push(`/login/${name}`)}>
+            <div className="card p-4 border border-danger" style={{ width: '18rem', height: '350px',cursor:"pointer" }} onClick={() => history.push(`/map/${name}`)}>
                 <div className="card-body d-flex align-items-center">
                     <img  src={image} className="card-img-top" alt="..." />
                 </div>
