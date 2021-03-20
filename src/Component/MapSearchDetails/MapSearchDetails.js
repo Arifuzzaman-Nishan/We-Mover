@@ -2,21 +2,27 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRoute } from '@fortawesome/free-solid-svg-icons';
 import { faUserFriends } from '@fortawesome/free-solid-svg-icons';
+import './MapSearchDetails.css';
 
 const MapSearchDetails = (props) => {
-    const { name, image, quantity, price, pickFrom, pickTo } = props.vehicleData;
+    const { name, image, quantity, price, pickFrom, pickTo, journeyDate, returnDate } = props.vehicleData;
     console.log(props.vehicleData);
+
     const array = [1, 2, 3];
     return (
         <div>
-            <div className='card p-3' style={{ background: 'orange' }}>
+            <div className='card p-3 bg'>
                 <div className='d-flex'>
-                    <div>
-                        <FontAwesomeIcon icon={faRoute} size='4x' />
+                    <div className='my-auto'>
+                        <FontAwesomeIcon className='text-dark' icon={faRoute} size='4x' />
                     </div>
                     <div style={{ textTransform: 'capitalize' }} className="ml-3">
-                        <h3>{pickFrom}</h3>
-                        <h3>{pickTo}</h3>
+                            <h4>{pickFrom}</h4>
+                            <p className='ml-auto'>{journeyDate}</p>
+            
+                            <h4>{pickTo}</h4>
+                            <p className='ml-auto'>{returnDate}</p>
+                        
                     </div>
                 </div>
             </div>
