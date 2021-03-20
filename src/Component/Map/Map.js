@@ -57,11 +57,11 @@ const Map = () => {
                         {
                             search ? <form onSubmit={handleSubmit}>
                                 <div>
-                                    <label htmlFor="pickFrom">Pick From</label>
+                                    <label htmlFor="pickFrom">From</label>
                                     <input onBlur={handleChange} className='form-control' type="text" name='pickFrom' />
                                 </div>
                                 <div className='mt-4'>
-                                    <label htmlFor="pickTo">Pick To</label>
+                                    <label htmlFor="pickTo">To</label>
                                     <input onBlur={handleChange} className='form-control' type="text" name='pickTo' />
                                 </div>
                                 <div className='mt-4'>

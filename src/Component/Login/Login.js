@@ -1,129 +1,107 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext,useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons'
-import { faFacebookF } from '@fortawesome/free-brands-svg-icons'
-import { faTwitter } from '@fortawesome/free-brands-svg-icons'
 import './Login.css';
-import firebase from "firebase/app";
-import "firebase/auth";
-import firebaseConfig from './firebase.confiq';
-import './Login.css';
-import { useHistory, useLocation, useParams } from 'react-router';
-import fakeData from '../../fakeData/data.json';
+import { useHistory, useLocation } from 'react-router';
 import { useForm } from "react-hook-form";
-import { Link } from 'react-router-dom';
 import { userContext } from '../../App';
+import { createUserWithEmailAndPassword, handleGoogleSignIn, initializeLoginFramework, updateUserName, signInWithEmailAndPassword } from './LoginManager';
 
-if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-}
+initializeLoginFramework();
 
 const Login = () => {
+
     const { register, handleSubmit, watch, errors, reset } = useForm();
+    
     const password = useRef({});
     password.current = watch("password", "");
+    
 
 
     const [loggedInUser, setLoggedInUser] = useContext(userContext);
+
     let history = useHistory();
     let location = useLocation();
     let { from } = location.state || { from: { pathname: "/" } };
 
-    // sign UP and sing In
-    const onSubmit = (data) => {
-        if (newUser && data.email && data.password) {
-            firebase.auth().createUserWithEmailAndPassword(data.email, data.password)
-                .then((userCredential) => {
-                    // Signed in 
-                    // var user = userCredential.user;
-                    console.log('successfully created account');
+    const [message, setMessage] = useState({
+        success: '',
+        error: '',
+        value: true
+    })
 
-                    const user = firebase.auth().currentUser;
 
-                    user.updateProfile({
-                        displayName: data.name
-                    }).then(function () {
-                        setLoggedInUser(user);
-                        history.replace(from);
-                    }).catch(function (error) {
-                        // An error happened.
-                    });
-                })
-                .catch((error) => {
-                    var errorCode = error.code;
-                    var errorMessage = error.message;
-                    // console.log(errorCode, errorMessage);
-                    // ..
-                });
 
-        }
-        else {
-            firebase.auth().signInWithEmailAndPassword(data.email, data.password)
-                .then((userCredential) => {
-                    // Signed in
-                    var user = userCredential.user;
-                    // console.log(user);
-                    // setNewUserInfo(data);
-                    setLoggedInUser(user);
-                    console.log('successfully log in');
-                    history.replace(from);
-                    // ...
-                })
-                .catch((error) => {
-                    var errorCode = error.code;
-                    var errorMessage = error.message;
-                    console.log(errorCode, errorMessage);
-                });
-        }
-        // reset();
+    const errorAndSuccessMessage = (text, value) => {
+        const info = { ...message };
+        value ? info.success = `${text} ${newUser ? "created account" : "log in"}` : info.error = text;
+        setMessage(info);
     }
-
-    console.log(loggedInUser);
 
     // google sign In
-    const handleGoogleSignIn = () => {
-        const googleProvider = new firebase.auth.GoogleAuthProvider();
-        firebase.auth()
-            .signInWithPopup(googleProvider)
-            .then((result) => {
-                var credential = result.credential;
-
-                // This gives you a Google Access Token. You can use it to access the Google API.
-                var token = credential.accessToken;
-                // The signed-in user info.
-                var user = result.user;
-                setLoggedInUser(user);
+    const googleSignIn = () => {
+        handleGoogleSignIn()
+            .then(res => {
+                setLoggedInUser(res);
                 history.replace(from);
-                // console.log(user);
-                // ...
-            }).catch((error) => {
-                // Handle Errors here.
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                // The email of the user's account used.
-                var email = error.email;
-                // The firebase.auth.AuthCredential type that was used.
-                var credential = error.credential;
-                console.log(errorCode, errorMessage);
-                // ...
-            });
+            })
+    }
+
+    // sign UP and sing In
+    const onSubmit = (data, e) => {
+        if (newUser && data.email && data.password) {
+            createUserWithEmailAndPassword(data.email, data.password)
+                .then(res => {
+                    let value = false;
+                    if(res === 'successfully'){
+                        errorAndSuccessMessage(res,true);
+                        value = true;
+                    }
+                    else{
+                        errorAndSuccessMessage(res,false);
+                    }
+                    
+                    const user = updateUserName(data.name)
+                    user.updateProfile({
+                        displayName: data.name
+                    }).then(() => {
+                        if(value){
+                            setLoggedInUser(user) 
+                            history.replace(from);
+                        }
+                    })
+                })
+        }
+        else {
+            signInWithEmailAndPassword(data.email, data.password)
+                .then(res => {
+                    setLoggedInUser(res);
+
+                    if (typeof res === 'string' || res instanceof String) {
+                        errorAndSuccessMessage(res, false);
+                    }
+                    else {
+                        errorAndSuccessMessage("successfully", true);
+                        history.replace(from);
+                    }
+                })
+        }
     }
 
 
-
-    // const { name } = useParams();
-    // const vehicleInfo = fakeData.find(vehicleName => vehicleName.name === name);
 
 
     const [newUser, setNewUser] = useState(false);
-    const handleNewUser = () => {
+    const handleNewUser = (e) => {
         setNewUser(!newUser);
+        setMessage({});
         reset();
     }
 
 
+
     return (
-        <>
+        <div>
             <div className="container d-flex justify-content-center">
                 <div className="card pl-5 pr-5 pt-5 pb-3 mt-2" style={{ width: "23rem" }}>
                     {
@@ -131,6 +109,7 @@ const Login = () => {
                             :
                             <h2 className='text-center text-primary'>Login</h2>
                     }
+
                     <form onSubmit={handleSubmit(onSubmit)}>
 
                         {/* for name */}
@@ -144,7 +123,7 @@ const Login = () => {
                         {/* for password */}
                         <input className='mt-3 form-control' type="password" name='password' placeholder='Your password' ref={register({
                             required: "You must specify a password",
-                            pattern: /[a-zA-Z][0-9]/,
+                            pattern: /(?=.*?[a-z])(?=.*?[0-9])/,
                             minLength: {
                                 value: 8,
                                 message: "Password must have at least 8 characters"
@@ -173,7 +152,7 @@ const Login = () => {
 
                         {/* for icons */}
                         <div className='d-flex justify-content-around mt-3'>
-                            <div onClick={handleGoogleSignIn} className='icon google'>
+                            <div onClick={googleSignIn} className='icon google'>
                                 <FontAwesomeIcon icon={faGoogle} />
                             </div>
 
@@ -191,15 +170,20 @@ const Login = () => {
                                 :
                                 <div>
                                     <small>
-                                        <p className='mt-3 text-center'>Don't have an account</p>
+                                        <p onClick={handleNewUser} className='mt-3 text-center'>Don't have an account</p>
                                     </small>
                                     <p onClick={handleNewUser} className='link text-center'>Sign Up</p>
                                 </div>
                         }
                     </div>
+                    {
+                        message.success ? <p className='text-success font-weight-bold'>{message.success}</p>
+                            :
+                            <p className='text-danger font-weight-bold'>{message.error}</p>
+                    }
                 </div>
             </div>
-        </>
+        </div>
     );
 };
 

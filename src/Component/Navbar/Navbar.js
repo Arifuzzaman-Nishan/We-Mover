@@ -24,10 +24,10 @@ const Navbar = () => {
             </button>
 
             <div className={`${isNavCollapsed ? 'collapse' : ''} navbar-collapse`} id="navbarsExample09">
-                    <Link to="/home" className="nav-link text-info ml-auto" >Home</Link>
-                    <Link className="nav-link text-info" to="/map">Destination</Link>
-                    <Link className="nav-link text-info" to = "/blog">Blog</Link>
-                    <Link className="nav-link text-info" to ="/contact">Contact</Link>
+                    <Link to="/home" className="navi nav-link text-white ml-auto" >Home</Link>
+                    <Link className="navi nav-link text-white" to="/map">Destination</Link>
+                    <Link className="navi nav-link text-white" to = "/blog">Blog</Link>
+                    <Link className="navi nav-link text-white" to ="/contact">Contact</Link>
                     {
                         loggedInUser.displayName? <p className='mt-3 ml-3 font-weight-bold text-success'>{loggedInUser.displayName}</p> : <Link to="/map" className="nav-link text-white">
                         <button className='btn btn-danger'>Log in</button>

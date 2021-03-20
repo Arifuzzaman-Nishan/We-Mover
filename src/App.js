@@ -11,6 +11,8 @@ import {
 import NoMatch from './Component/NoMatch/NoMatch';
 import Map from './Component/Map/Map';
 import PrivateRoute from './Component/PrivateRoute/PrivateRoute';
+import Contact from './Component/Contact/Contact';
+import Blog from './Component/Blog/Blog';
 
 export const userContext = createContext();
 
@@ -34,6 +36,12 @@ const App = () => {
           <PrivateRoute path='/map'>
             <Map></Map>
           </PrivateRoute>
+          {/* <Route path='/blog'>
+            <Blog></Blog>
+          </Route>
+          <Route path='/contact'>
+            <Contact></Contact>
+          </Route> */}
           <Route exact path='/'>
             <Home></Home>
           </Route>

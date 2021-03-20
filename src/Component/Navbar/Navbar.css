@@ -1,3 +1,6 @@
 .img-style{
     height: 50px;
 }
+.navi:hover{
+    background-color: gray;
+}
