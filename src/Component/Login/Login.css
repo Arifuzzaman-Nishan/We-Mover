@@ -22,14 +22,36 @@
 .google:hover{
     background-color: rgb(51, 50, 50);
 }
-.twitter:hover{
+
+/* input[type=submit]{
+    font-size: 18px;
+    background-color: #E73040;
+} */
+
+/* input[type=submit]:hover{
     background-color: rgb(51, 50, 50);
+} */
+/* .button{
+    background-color: #E73040;
+} */
+
+
+.link{
+    text-decoration: underline;
+    cursor: pointer;
+    color: #0000EE;
+    font-weight: 600;
 }
-.facebook:hover{
-    background-color: rgb(51, 50, 50);
-  }
-.logged-in{
-    font-size: 16px;
-    line-height: 1.2;
-    color: #1DA1F2;
+.link:active {
+    color: #EE0000;
 }
+.link:visited {
+    color: #551A8B;
+}
+
+body {padding:0px; margin:0px;}
+/* form {
+    padding:0px 1px 2px 7px; 
+    margin:2px 0px 2px 0px;
+    border-bottom:#CCC dotted 1px;
+} */
