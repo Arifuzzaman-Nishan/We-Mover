@@ -12,7 +12,7 @@ const HomeDetails = (props) => {
                     <img  src={image} className="card-img-top" alt="..." />
                 </div>
                 <div>
-                    <h5 className="card-title text-center">{name}</h5>
+                    <h5 className="card-title text-center text-danger">{name}</h5>
                 </div>
             </div>
         </div>

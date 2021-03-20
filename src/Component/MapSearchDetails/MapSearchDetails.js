@@ -14,9 +14,9 @@ const MapSearchDetails = (props) => {
             <div className='card p-3 bg'>
                 <div className='d-flex'>
                     <div className='my-auto'>
-                        <FontAwesomeIcon className='text-dark' icon={faRoute} size='4x' />
+                        <FontAwesomeIcon className='text-warning' icon={faRoute} size='4x' />
                     </div>
-                    <div style={{ textTransform: 'capitalize' }} className="ml-3">
+                    <div style={{ textTransform: 'capitalize' }} className="ml-3 text-white">
                             <h4>{pickFrom}</h4>
                             <p className='ml-auto'>{journeyDate}</p>
             
@@ -28,7 +28,7 @@ const MapSearchDetails = (props) => {
             </div>
 
             {
-                array.map(() => <div className='card mt-3'>
+                array.map(() => <div className='card bg-vehicle mt-3'>
                     <div className='d-flex justify-content-between align-items-center font-weight-bold mt-2 p-3'>
                         <img className="w-25" src={image} alt="" />
                         <h5 style={{ textTransform: 'lowercase' }}>{name}</h5>
@@ -36,7 +36,7 @@ const MapSearchDetails = (props) => {
                             <FontAwesomeIcon className="ml-2" icon={faUserFriends} />
                             <span className='ml-1 '>{quantity}</span>
                         </div>
-                        <h5 >{price}</h5>
+                        <h5 className='font-weight-bold text-danger'>{price}</h5>
                     </div>
                 </div>)
             }
