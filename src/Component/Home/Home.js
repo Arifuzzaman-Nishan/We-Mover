@@ -13,9 +13,8 @@ const Home = () => {
 
     return (
         <div className='bg-pic'>
-            <Navbar></Navbar>
-            <div style={{height:'90vh'}} className="container d-flex align-items-center">
-                <div className="row">
+            <div className="container margin">
+                <div className="row d-flex align-items-center">
                     {
                         vehicleInfos.map(vehicle => <HomeDetails key={vehicle.id} vehicle={vehicle}></HomeDetails>)
                     }

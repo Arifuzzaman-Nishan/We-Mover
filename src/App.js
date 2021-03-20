@@ -19,6 +19,7 @@ const App = () => {
   return (
     <userContext.Provider value={[loggedInUser, setLoggedInUser]}>
       <Router>
+        <Navbar></Navbar>
         <Switch>
           <Route path='/home'>
             <Home></Home>
@@ -28,10 +29,10 @@ const App = () => {
           </Route>
           {/* this is the dynamic path  */}
           <PrivateRoute path='/map/:vehicleName'>
-              <Map></Map>
+            <Map></Map>
           </PrivateRoute>
           <PrivateRoute path='/map'>
-              <Map></Map>
+            <Map></Map>
           </PrivateRoute>
           <Route exact path='/'>
             <Home></Home>
@@ -41,7 +42,7 @@ const App = () => {
           </Route>
         </Switch>
       </Router>
-      </userContext.Provider>
+    </userContext.Provider>
   );
 };
 

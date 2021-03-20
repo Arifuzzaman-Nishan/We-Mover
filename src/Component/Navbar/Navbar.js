@@ -15,10 +15,10 @@ const Navbar = () => {
 
     return (
         <nav className="container bg-color navbar navbar-expand-lg navbar-light rounded">
-            <a className="navbar-brand text-info font-weight-bolder" href="/">
-                <img src={logo} alt="" height="36" className="vertical-align-middle" />
+            <Link className="navbar-brand text-info font-weight-bolder" to="/">
+                <img src={logo} alt="" className="img-style" />
                 {/* <span classNameName="mx-5">We Mover</span> */}
-            </a>
+            </Link>
             <button className="custom-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded={!isNavCollapsed ? true : false} aria-label="Toggle navigation" onClick={handleNavCollapse}>
                 <span className="navbar-toggler-icon"></span>
             </button>

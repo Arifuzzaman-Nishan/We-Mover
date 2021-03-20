@@ -6,8 +6,8 @@ const HomeDetails = (props) => {
     const history = useHistory();
 
     return (
-        <div className='col-lg-3 col-md-6 col-12'>
-            <div className="card p-4 border border-danger" style={{ width: '18rem', height: '350px',cursor:"pointer" }} onClick={() => history.push(`/map/${name}`)}>
+        <div className='col-xl-3 col-lg-4 col-sm-6 col-12 mt-5'>
+            <div className="card ml-auto mr-auto p-4 border border-danger" style={{ width: '18rem', height: '350px',cursor:"pointer" }} onClick={() => history.push(`/map/${name}`)}>
                 <div className="card-body d-flex align-items-center">
                     <img  src={image} className="card-img-top" alt="..." />
                 </div>

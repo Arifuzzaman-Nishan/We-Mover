@@ -38,7 +38,7 @@ const Login = () => {
                     // var user = userCredential.user;
                     console.log('successfully created account');
 
-                    var user = firebase.auth().currentUser;
+                    const user = firebase.auth().currentUser;
 
                     user.updateProfile({
                         displayName: data.name
