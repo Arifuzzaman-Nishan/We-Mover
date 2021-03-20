@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Navbar from '../Navbar/Navbar';
 import './Home.css';
 import data from '../../fakeData/data.json';
 import HomeDetails from '../HomeDetails/HomeDetails';

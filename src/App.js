@@ -36,12 +36,12 @@ const App = () => {
           <PrivateRoute path='/map'>
             <Map></Map>
           </PrivateRoute>
-          {/* <Route path='/blog'>
+          <Route path='/blog'>
             <Blog></Blog>
           </Route>
           <Route path='/contact'>
             <Contact></Contact>
-          </Route> */}
+          </Route>
           <Route exact path='/'>
             <Home></Home>
           </Route>
