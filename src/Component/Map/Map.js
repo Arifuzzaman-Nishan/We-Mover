@@ -3,6 +3,7 @@ import { useParams } from 'react-router';
 import Navbar from '../Navbar/Navbar';
 import MapSearchDetails from './MapSearchDetails';
 import fakeData from '../../fakeData/data.json';
+import GoogleMapShow from './GoogleMapShow';
 
 const Map = () => {
     const [search, setSearch] = useState(true);
@@ -43,7 +44,7 @@ const Map = () => {
         vehicleAllData[e.target.name] = e.target.value;
         setVehicleData(vehicleAllData);
     }
-    
+
     console.log(vehicleData);
     return (
         <div className='container'>
@@ -69,6 +70,9 @@ const Map = () => {
                                 <MapSearchDetails vehicleData={vehicleData}></MapSearchDetails>
                         }
                     </div>
+                </div>
+                <div className='col-9'>
+                    <GoogleMapShow></GoogleMapShow>
                 </div>
             </div>
         </div>

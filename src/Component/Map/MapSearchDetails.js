@@ -6,7 +6,6 @@ import { faUserFriends } from '@fortawesome/free-solid-svg-icons';
 const MapSearchDetails = (props) => {
     const { name, image, quantity, price, pickFrom, pickTo } = props.vehicleData;
     console.log(props.vehicleData);
-    const totalTimes = 3;
     const array = [1, 2, 3];
     return (
         <div>
