@@ -21,9 +21,8 @@ if (!firebase.apps.length) {
 const Login = () => {
     const { register, handleSubmit, watch, errors, reset } = useForm();
     const password = useRef({});
-    password.current = watch("password", "");
+    // password.current = watch("password", "");
 
-    const [newUserInfo, setNewUserInfo] = useState({});
 
     const [loggedInUser, setLoggedInUser] = useContext(userContext);
     let history = useHistory();
@@ -38,7 +37,7 @@ const Login = () => {
                     // Signed in 
                     // var user = userCredential.user;
                     console.log('successfully created account');
-                   
+
                     var user = firebase.auth().currentUser;
 
                     user.updateProfile({
@@ -78,7 +77,7 @@ const Login = () => {
         }
     }
 
-    console.log(newUserInfo);
+    console.log(loggedInUser);
 
     // google sign In
     const handleGoogleSignIn = () => {

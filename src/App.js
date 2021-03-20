@@ -27,7 +27,7 @@ const App = () => {
             <Login></Login>
           </Route>
           {/* this is the dynamic path  */}
-          <PrivateRoute path='/map/:name'>
+          <PrivateRoute path='/map/:vehicleName'>
               <Map></Map>
           </PrivateRoute>
           <PrivateRoute path='/map'>
