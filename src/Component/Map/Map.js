@@ -4,11 +4,13 @@ import MapSearchDetails from '../MapSearchDetails/MapSearchDetails';
 import fakeData from '../../fakeData/data.json';
 import './Map.css';
 import GoogleMapShow from '../GoogleMapShow/GoogleMapShow';
+// import GoogleMapShow from '../GoogleMapShow/GoogleMapShow';
 
 const Map = () => {
+
     const [search, setSearch] = useState(true);
     const [vehicleData, setVehicleData] = useState({
-        id:'',
+        id: '',
         name: '',
         image: '',
         quantity: '',
@@ -27,7 +29,7 @@ const Map = () => {
     useEffect(() => {
         const vehicleInfo = fakeData.find(vehicle => vehicle.name === vehicleName);
 
-        const { name, image, quantity, price,id } = vehicleInfo;
+        const { name, image, quantity, price, id } = vehicleInfo;
 
         const vehicleDataStore = {
             id: id,
@@ -86,7 +88,7 @@ const Map = () => {
                     </div>
                 </div>
                 <div className='col-xl-8 col-lg-7 col-md-6'>
-                    <GoogleMapShow></GoogleMapShow>
+                   <GoogleMapShow></GoogleMapShow>
                 </div>
             </div>
         </div>

@@ -1,5 +1,8 @@
 import React from 'react';
 import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
+import Marker from 'react-google-maps/lib/components/Marker';
+import { useState } from 'react';
+import InfoWindow from 'react-google-maps/lib/components/InfoWindow';
 // import { GoogleMap, Marker } from "react-google-maps"
 
 const containerStyle = {
@@ -8,12 +11,27 @@ const containerStyle = {
 };
 
 const center = {
-    lat: 23.777176,
-    lng: 90.399452
+    lat: 23.810331,
+    lng: 90.412521
 };
 
 
-const GoogleMapShow = () => {
+
+
+const GoogleMapShow = (props) => {
+
+    const [marker, setMarker] = useState({})
+
+    const onMarkerClick = (props, marker, e) => {
+        setMarker({
+            selectedPlace: props,
+            activeMarker: marker,
+            showingInfoWindow: true
+        })
+    }
+
+
+
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
         googleMapsApiKey: "AIzaSyCx3UD6tq654GJB8eRXdyuKiUNoh7tzIy8"
@@ -40,8 +58,11 @@ const GoogleMapShow = () => {
             onLoad={onLoad}
             onUnmount={onUnmount}
         >
-            { /* Child components, such as markers, info windows, etc. */}
-            <></>
+            <Marker
+                onClick={onMarkerClick}
+                name={'Kenyatta International Convention Centre'}
+            />
+            
         </GoogleMap>
     ) : <></>
 };
