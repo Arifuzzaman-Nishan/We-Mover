@@ -16,41 +16,49 @@ export const handleGoogleSignIn = () => {
             var user = result.user;
             return user;
         }).catch((error) => {
-           
+
         });
 }
 
 
 export const createUserWithEmailAndPassword = (email, password) => {
-     return firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then((res) => {
-        return 'successfully';
+    return firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then((res) => {
+            return 'successfully';
 
-    })
-    .catch((error) => {
-        var errorMessage = error.message;
-        return errorMessage;
-    });
+        })
+        .catch((error) => {
+            var errorMessage = error.message;
+            return errorMessage;
+        });
 }
 
-export const updateUserName = (name) =>{
+export const updateUserName = (name) => {
     const user = firebase.auth().currentUser;
     return user;
 }
 
 
-export const signInWithEmailAndPassword = (email,password) => {
-     return firebase.auth().signInWithEmailAndPassword(email,password)
-    .then((userCredential) => {
-        const user = userCredential.user;
-        return user;
-    })
-    .catch((error) => {
-        const errorMessage = error.message;
-        
-        return errorMessage;
-    });
+export const signInWithEmailAndPassword = (email, password) => {
+    return firebase.auth().signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+            const user = userCredential.user;
+            return user;
+        })
+        .catch((error) => {
+            const errorMessage = error.message;
+
+            return errorMessage;
+        });
 }
 
+export const handleSignOut = () => {
+    return firebase.auth().signOut()
+    .then(() => {
+        // Sign-out successful.
+    }).catch((error) => {
+        // An error happened.
+    });
+}
 
 

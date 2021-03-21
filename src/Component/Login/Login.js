@@ -5,7 +5,7 @@ import './Login.css';
 import { useHistory, useLocation } from 'react-router';
 import { useForm } from "react-hook-form";
 import { userContext } from '../../App';
-import { createUserWithEmailAndPassword, handleGoogleSignIn, initializeLoginFramework, updateUserName, signInWithEmailAndPassword } from './LoginManager';
+import { createUserWithEmailAndPassword, handleGoogleSignIn, initializeLoginFramework, updateUserName, signInWithEmailAndPassword, handleSignOut } from './LoginManager';
 
 initializeLoginFramework();
 
@@ -87,7 +87,6 @@ const Login = () => {
                 })
         }
     }
-
 
 
 
