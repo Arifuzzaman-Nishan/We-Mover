@@ -18,8 +18,8 @@
     "price": "$20"
   }, {
     "id": 4,
-    "name": "TRAIN",
-    "image": "https://i.ibb.co/J5xhdKy/train.jpg",
+    "name": "Plane",
+    "image": "https://i.ibb.co/JBHsZ6R/plane.jpg",
     "quantity": "2",
-    "price": "$15"
+    "price": "$120"
   }]
